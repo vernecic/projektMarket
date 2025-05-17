@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+
+@theme {
+  --color-FIPU-blue: rgb(14, 165, 233);
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
