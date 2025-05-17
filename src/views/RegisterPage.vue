@@ -3,13 +3,8 @@
     <h1 class="text-blue-500 text-4xl font-bold">Register</h1>
 
     <form>
-      <div class="grid gap-6 mb-6 md:grid-cols-2">
+      <div class="grid gap-6 mb-6 md:grid-cols-2 mt-5">
         <div class="mb-6">
-          <label
-            for="email"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Username</label
-          >
           <input
             type="email"
             id="email"
@@ -19,12 +14,8 @@
             required
           />
         </div>
+
         <div class="mb-6">
-          <label
-            for="email"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Email address</label
-          >
           <input
             type="email"
             id="email"
@@ -34,12 +25,8 @@
             required
           />
         </div>
+
         <div class="mb-6">
-          <label
-            for="password"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Password</label
-          >
           <input
             type="password"
             id="password"
@@ -49,12 +36,8 @@
             required
           />
         </div>
+
         <div class="mb-6">
-          <label
-            for="confirm_password"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Confirm password</label
-          >
           <input
             type="password"
             id="confirm_password"
@@ -63,6 +46,32 @@
             v-model="confirmPassword"
             required
           />
+        </div>
+
+        <div class="col-span-2 mb-6">
+          <p class="block mb-2 text-sm font-medium text-gray-900">Role</p>
+          <div class="flex gap-6">
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="role"
+                value="buyer"
+                v-model="role"
+                class="text-blue-600 focus:ring-blue-500"
+              />
+              <span>Buyer</span>
+            </label>
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="role"
+                value="seller"
+                v-model="role"
+                class="text-blue-600 focus:ring-blue-500"
+              />
+              <span>Seller</span>
+            </label>
+          </div>
         </div>
 
         <button
@@ -92,4 +101,5 @@ const username = ref("");
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
+const role = ref(null);
 </script>
