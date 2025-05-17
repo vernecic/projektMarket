@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
 import Login from "@/views/LoginPage.vue";
 import Register from "@/views/RegisterPage.vue";
+import Feed from "@/views/Feed.vue";
 
 const routes = [
   { path: "/", component: HomeView },
@@ -13,6 +14,10 @@ const routes = [
   {
     path: "/register",
     component: Register,
+  },
+  {
+    path: "/feed",
+    component: Feed,
   },
 ];
 

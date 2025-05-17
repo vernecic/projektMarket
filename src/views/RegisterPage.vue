@@ -2,12 +2,12 @@
   <div class="flex justify-center items-center h-screen flex-col">
     <h1 class="text-blue-500 text-4xl font-bold">Register</h1>
 
-    <form>
+    <form @submit.prevent="handleRegister">
       <div class="grid gap-6 mb-6 md:grid-cols-2 mt-5">
         <div class="mb-6">
           <input
-            type="email"
-            id="email"
+            type="username"
+            id="username"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             placeholder="Input your username:"
             v-model="username"
@@ -96,10 +96,46 @@
 
 <script setup>
 import { ref } from "vue";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { setDoc, doc } from "firebase/firestore";
+import { auth, db } from "@/firebase";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const username = ref("");
 const email = ref("");
 const password = ref("");
 const confirmPassword = ref("");
 const role = ref(null);
+
+// register
+const handleRegister = async () => {
+  if (password.value !== confirmPassword.value) {
+    console.log("Passwords do not match!");
+    // nešto dodat
+    return;
+  }
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+
+    const user = userCredential.user;
+
+    await setDoc(doc(db, "users", user.uid), {
+      username: username.value,
+      email: email.value,
+      role: role.value,
+      createdAt: new Date(),
+    });
+
+    console.log("Register successful: ", user);
+    router.push("/login");
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
 </script>

@@ -2,20 +2,20 @@
   <div class="flex justify-center items-center h-screen flex-col">
     <h1 class="text-blue-500 text-4xl font-bold">Login</h1>
 
-    <form>
+    <form @submit.prevent="handleLogin">
       <div class="grid gap-6 mb-6 md:grid-cols-2">
         <div class="mb-6">
           <label
             for="email"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >Username</label
+            >Email</label
           >
           <input
-            type="username"
+            type="email"
             id="email"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-            placeholder="Input your username:"
-            v-model="username"
+            placeholder="Input your email:"
+            v-model="email"
             required
           />
         </div>
@@ -58,7 +58,28 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase";
 
-const username = ref("");
+const email = ref("");
 const password = ref("");
+
+const router = useRouter();
+
+const handleLogin = async () => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email.value,
+      password.value
+    );
+    console.log("Login successful", userCredential.user);
+
+    router.push("/feed");
+  } catch (error) {
+    console.error("Login failed:", error);
+    alert("Login failed: " + error.message);
+  }
+};
 </script>
