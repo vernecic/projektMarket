@@ -130,6 +130,7 @@ const handleRegister = async () => {
       email: email.value,
       role: role.value,
       createdAt: new Date(),
+      balance: 0,
     });
 
     console.log("Register successful: ", user);
