@@ -13,7 +13,9 @@
           Create a listing
         </button>
       </div>
-      <div class="mt-10 flex-col items-center">
+      <div
+        class="group mt-10 flex-col items-center border rounded-xl px-3 py-4 shadow-lg hover:border-blue-700 cursor-pointer"
+      >
         <div class="mb-5">
           <h1 class="text-xl">Balance: {{ balance }} €</h1>
         </div>
@@ -21,7 +23,7 @@
           <input
             type="number"
             placeholder="Input amount"
-            class="outline-0 px-1 py-2"
+            class="outline-0 px-1 py-2 bg-gray-100"
             v-model="deposit"
           />
           <button

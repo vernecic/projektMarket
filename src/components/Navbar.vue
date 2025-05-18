@@ -3,15 +3,12 @@
     <div
       class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
     >
-      <a
-        href="https://flowbite.com/"
-        class="flex items-center space-x-3 rtl:space-x-reverse"
-      >
+      <p class="flex items-center space-x-3 rtl:space-x-reverse cursor-pointer">
         <span
-          class="self-center text-4xl whitespace-nowrap text-blue-900 font-bold"
+          class="self-center text-4xl whitespace-nowrap text-blue-900 font-bold hover:text-blue-700"
           >Boovljak</span
         >
-      </a>
+      </p>
 
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul
@@ -20,7 +17,11 @@
           <li>
             <router-link
               to="/feed"
-              class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:text-blue-700 md:p-0"
+              class="block bg-blue-700 rounded-sm md:bg-transparent p-0 cursor-pointer"
+              :class="{
+                'text-blue-700': route.path === '/feed',
+                'text-gray-900 md:hover:text-blue-700': route.path !== '/feed',
+              }"
               aria-current="page"
               >Home</router-link
             >
@@ -28,14 +29,24 @@
           <li>
             <router-link
               to="/orders"
-              class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 cursor-pointer"
+              class="block bg-blue-700 rounded-sm md:bg-transparent p-0 cursor-pointer"
+              :class="{
+                'text-blue-700': route.path === '/orders',
+                'text-gray-900 md:hover:text-blue-700':
+                  route.path !== '/orders',
+              }"
               >Orders</router-link
             >
           </li>
           <li>
             <a
               href="#"
-              class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
+              class="block bg-blue-700 rounded-sm md:bg-transparent p-0 cursor-pointer"
+              :class="{
+                'text-blue-700': route.path === '/notifications',
+                'text-gray-900 md:hover:text-blue-700':
+                  route.path !== '/notifications',
+              }"
               >Notifications</a
             >
           </li>
@@ -43,7 +54,7 @@
           <li>
             <a
               href="#"
-              class="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
+              class="block bg-blue-700 rounded-sm md:bg-transparent p-0 cursor-pointer text-gray-900 hover:text-blue-700"
               >Log out</a
             >
           </li>
@@ -52,3 +63,9 @@
     </div>
   </nav>
 </template>
+
+<script setup>
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+</script>
