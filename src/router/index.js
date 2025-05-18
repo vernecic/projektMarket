@@ -4,6 +4,8 @@ import HomeView from "@/views/HomeView.vue";
 import Login from "@/views/LoginPage.vue";
 import Register from "@/views/RegisterPage.vue";
 import Feed from "@/views/Feed.vue";
+import HomePage from "@/views/HomePage.vue";
+import Orders from "@/views/Orders.vue";
 
 const routes = [
   { path: "/", component: HomeView },
@@ -16,8 +18,12 @@ const routes = [
     component: Register,
   },
   {
+    path: "/orders",
+    component: Orders,
+  },
+  {
     path: "/feed",
-    component: Feed,
+    component: HomePage,
   },
 ];
 
