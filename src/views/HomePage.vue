@@ -83,7 +83,7 @@
         <div class="mb-5">
           <h1 class="text-xl">Balance: {{ balance }} €</h1>
         </div>
-        <div>
+        <div v-if="role === 'buyer'">
           <input
             type="number"
             placeholder="Input amount"
@@ -114,11 +114,18 @@ const balance = ref("");
 
 const showCreateListing = ref(false);
 
+// listing variable
+const title = ref("");
+const description = ref("");
+const price = ref("");
+
 // create listing
 
-const handleCreateListing = async () => {
+const handleCreateListing = () => {
   showCreateListing.value = true;
 };
+
+const submitListing = async () => {};
 
 // deposit
 const handleDeposit = async () => {
@@ -160,8 +167,7 @@ const fetchBalance = async () => {
   }
 };
 
-onMounted(async () => {
-  fetchBalance();
+const fetchRole = async () => {
   const user = auth.currentUser;
   if (user) {
     const userDoc = await getDoc(doc(db, "users", user.uid));
@@ -169,5 +175,10 @@ onMounted(async () => {
       role.value = userDoc.data().role;
     }
   }
+};
+
+onMounted(async () => {
+  fetchBalance();
+  fetchRole();
 });
 </script>
