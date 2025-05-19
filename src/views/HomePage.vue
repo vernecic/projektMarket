@@ -22,6 +22,28 @@
             <h1 class="text-2xl font-semibold text-center mb-6">
               Create a Listing
             </h1>
+            <div class="mb-4">
+              <label
+                for="image"
+                clas="block text-sm font-medium text-gray-700 mb-1"
+                >Upload image:</label
+              >
+              <input
+                id="image"
+                type="file"
+                accept="image/*"
+                @change="handleImageUpload"
+                class="block w-full text-sm text-gray-700 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+              />
+
+              <div v-if="previewImage" class="mt-4">
+                <img
+                  :src="previewImage"
+                  alt="Preview"
+                  class="w-full h-auto rounded-lg shadow"
+                />
+              </div>
+            </div>
 
             <div class="mb-4">
               <label
@@ -115,9 +137,24 @@ const balance = ref("");
 const showCreateListing = ref(false);
 
 // listing variable
+const image = ref(null);
 const title = ref("");
 const description = ref("");
 const price = ref("");
+
+const previewImage = ref(null);
+
+// local preview
+const handleImageUpload = (event) => {
+  const file = event.target.files[0];
+  if (file && file.type.startsWith("image/")) {
+    image.value = file;
+    previewImage.value = URL.createObjectURL(file);
+  } else {
+    image.value = null;
+    previewImage.value = null;
+  }
+};
 
 // create listing
 
