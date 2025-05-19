@@ -55,6 +55,7 @@
             <a
               href="#"
               class="block bg-blue-700 rounded-sm md:bg-transparent p-0 cursor-pointer text-gray-900 hover:text-blue-700"
+              @click="handleSignOut"
               >Log out</a
             >
           </li>
@@ -66,6 +67,21 @@
 
 <script setup>
 import { useRoute } from "vue-router";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebase";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+const handleSignOut = async () => {
+  try {
+    await signOut(auth);
+    console.log("Signed out!");
+    router.push("/");
+  } catch (error) {
+    console.error("Sign-out error:", error);
+  }
+};
 
 const route = useRoute();
 </script>

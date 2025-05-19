@@ -96,6 +96,12 @@
             >
               Submit Listing
             </button>
+            <div
+              class="flex justify-center mt-2 text-red-700"
+              v-if="neispunjeno"
+            >
+              Please input all fields
+            </div>
           </div>
         </div>
       </div>
@@ -127,7 +133,14 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { getDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  updateDoc,
+  addDoc,
+  collection,
+  serverTimestamp,
+} from "firebase/firestore";
 import { auth, db } from "@/firebase";
 
 const role = ref("");
@@ -135,6 +148,7 @@ const role = ref("");
 const deposit = ref("");
 const balance = ref("");
 const username = ref("");
+const neispunjeno = ref(false);
 
 const showCreateListing = ref(false);
 
@@ -171,12 +185,42 @@ const fetchUsername = async () => {
   }
 };
 
-// create listing
+// create listing toggle
 const handleCreateListing = () => {
   showCreateListing.value = true;
 };
 
-const submitListing = async () => {};
+// submit listing
+const submitListing = async () => {
+  if (!image.value || !title.value || !description.value || !price.value) {
+    neispunjeno.value = true;
+    return;
+  }
+
+  const user = auth.currentUser;
+  if (!user) return;
+
+  try {
+    const listingRef = collection(db, "listings");
+    const docRef = await addDoc(listingRef, {
+      title: title.value,
+      description: description.value,
+      price: parseFloat(price.value),
+      createdAt: serverTimestamp(),
+      approved: false,
+      seller: username.value,
+      buyer: null,
+    });
+    console.log("Listing submitted");
+
+    title.value = "";
+    (description.value = ""),
+      (price.value = ""),
+      (showCreateListing.value = false);
+  } catch (error) {
+    console.error("Error: ", error);
+  }
+};
 
 // deposit
 const handleDeposit = async () => {
