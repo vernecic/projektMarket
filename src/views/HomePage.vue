@@ -96,6 +96,12 @@
             >
               Submit Listing
             </button>
+            <button
+              @click="showCreateListing = false"
+              class="w-full py-2 bg-gray-400 mt-2 text-white rounded-lg hover:bg-blue-700 transition duration-200 cursor-pointer"
+            >
+              Close
+            </button>
             <div
               class="flex justify-center mt-2 text-red-700"
               v-if="neispunjeno"
