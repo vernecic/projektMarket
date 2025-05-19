@@ -33,7 +33,7 @@
                 type="file"
                 accept="image/*"
                 @change="handleImageUpload"
-                class="block w-full text-sm text-gray-700 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700"
+                class="block w-full text-sm text-gray-700 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:cursor-pointer"
               />
 
               <div v-if="previewImage" class="mt-4">
@@ -92,7 +92,7 @@
 
             <button
               @click="submitListing"
-              class="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
+              class="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 cursor-pointer"
             >
               Submit Listing
             </button>
