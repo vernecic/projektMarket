@@ -1,17 +1,81 @@
 <template>
   <div class="flex justify-center items-center">
-    <div class="flex gap-10 items-center">
-      <div class="flex items-start w-3xl mt-10 justify-between">
-        <h1 class="text-2xl">
-          <span v-if="role === 'seller'">Your </span>Listings:
-        </h1>
+    <div class="flex gap-10 items-start">
+      <div class="group rounded-xl px-3 py-4">
+        <div class="flex items-start w-3xl mt-10 justify-between">
+          <h1 class="text-2xl">
+            <h1 v-if="!showCreateListing">
+              <span v-if="role === 'seller'">Your </span>Listings:
+            </h1>
+          </h1>
 
-        <button
-          v-if="role === 'seller'"
-          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer shadow-md"
-        >
-          Create a listing
-        </button>
+          <button
+            v-if="role === 'seller'"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer shadow-md"
+            @click="handleCreateListing"
+          >
+            Create a listing
+          </button>
+        </div>
+        <div v-if="showCreateListing" class="flex justify-center mt-10 px-4">
+          <div class="w-full max-w-md bg-white p-6 rounded-2xl shadow-lg">
+            <h1 class="text-2xl font-semibold text-center mb-6">
+              Create a Listing
+            </h1>
+
+            <div class="mb-4">
+              <label
+                for="title"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Title</label
+              >
+              <input
+                id="title"
+                type="text"
+                v-model="title"
+                placeholder="Enter the listing title"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
+              />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="description"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Description</label
+              >
+              <textarea
+                id="description"
+                v-model="description"
+                placeholder="Describe your listing..."
+                rows="4"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
+              ></textarea>
+            </div>
+
+            <div class="mb-6">
+              <label
+                for="price"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >Price (€)</label
+              >
+              <input
+                id="price"
+                type="number"
+                v-model="price"
+                placeholder="Set a price"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
+              />
+            </div>
+
+            <button
+              @click="submitListing"
+              class="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
+            >
+              Submit Listing
+            </button>
+          </div>
+        </div>
       </div>
       <div
         class="group mt-10 flex-col items-center border rounded-xl px-3 py-4 shadow-lg hover:border-blue-700 cursor-pointer"
@@ -48,6 +112,15 @@ const role = ref("");
 const deposit = ref("");
 const balance = ref("");
 
+const showCreateListing = ref(false);
+
+// create listing
+
+const handleCreateListing = async () => {
+  showCreateListing.value = true;
+};
+
+// deposit
 const handleDeposit = async () => {
   const amount = parseFloat(deposit.value);
 
@@ -73,7 +146,7 @@ const handleDeposit = async () => {
     console.log("Deposit must be over 0");
   }
 };
-
+// deposit - prikaz
 const fetchBalance = async () => {
   const user = auth.currentUser;
   if (!user) return;
