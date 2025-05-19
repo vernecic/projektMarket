@@ -103,6 +103,7 @@
         class="group mt-10 flex-col items-center border rounded-xl px-3 py-4 shadow-lg hover:border-blue-700 cursor-pointer"
       >
         <div class="mb-5">
+          <h1>{{ username }}</h1>
           <h1 class="text-xl">Balance: {{ balance }} €</h1>
         </div>
         <div v-if="role === 'buyer'">
@@ -133,6 +134,7 @@ const role = ref("");
 
 const deposit = ref("");
 const balance = ref("");
+const username = ref("");
 
 const showCreateListing = ref(false);
 
@@ -156,8 +158,20 @@ const handleImageUpload = (event) => {
   }
 };
 
-// create listing
+// fetch username
+const fetchUsername = async () => {
+  const user = auth.currentUser;
+  if (!user) return;
 
+  const userRef = doc(db, "users", user.uid);
+  const userDoc = await getDoc(userRef);
+
+  if (userDoc.exists()) {
+    username.value = userDoc.data().username;
+  }
+};
+
+// create listing
 const handleCreateListing = () => {
   showCreateListing.value = true;
 };
@@ -217,5 +231,6 @@ const fetchRole = async () => {
 onMounted(async () => {
   fetchBalance();
   fetchRole();
+  fetchUsername();
 });
 </script>
